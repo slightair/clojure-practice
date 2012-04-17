@@ -1,8 +1,8 @@
-(def numTrial 32)
+(def num-trial 32)
 (def rule 90)
-(def initialState (flatten (list (repeat 32 0) 1 (repeat 32 0))))
+(def initial-state (flatten (list (repeat 32 0) 1 (repeat 32 0))))
 
-(defn showCells [cells]
+(defn show-cells [cells]
   (println (apply str (map #(cond (= % 0) " "
                                   (= % 1) "*") cells))))
 
@@ -21,11 +21,11 @@
 (defn pattern [n]
   (reduce + (map #(apply * %) (pairs (interleave [4 2 1] n)))))
 
-(defn nextStatus [pat]
+(defn next-status [pat]
   (if (> (bit-and rule (bit-shift-left 1 pat)) 0) 1 0))
 
 (defn tick [state]
-  (map nextStatus (map pattern (neighbors state))))
+  (map next-status (map pattern (neighbors state))))
 
-(doseq [state (take numTrial (iterate tick initialState))]
-  (showCells state))
+(doseq [state (take num-trial (iterate tick initial-state))]
+  (show-cells state))
